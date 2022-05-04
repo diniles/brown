@@ -1,6 +1,8 @@
 const express = require("express");
 const expressHandlebars = require("express-handlebars");
 
+const fortune = require("./lib/fortune");
+
 const app = express();
 
 // setting up Handlebars
@@ -19,17 +21,8 @@ const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => res.render("home"));
 
-const fortunes = [
-  "Победи свои страхи, или они победят тебя.",
-  "Рекам нужны истоки.",
-  "Не бойся неведомого.",
-  "Тебя ждет приятный сюрприз.",
-  "Будь проще везде, где только можно.",
-];
-
 app.get("/about", (req, res) => {
-  const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-  res.render("about", { fortune: randomFortune });
+  res.render("about", { fortune: fortune.getFortune() });
 });
 
 // user page 404
