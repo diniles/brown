@@ -3,8 +3,6 @@ const expressHandlebars = require("express-handlebars");
 
 const app = express();
 
-const port = process.env.PORT || 3000;
-
 // setting up Handlebars
 app.engine(
   "handlebars",
@@ -13,6 +11,11 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
+
+// add middleware path
+app.use(express.static(__dirname + "/public"));
+
+const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => res.render("home"));
 
