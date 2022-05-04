@@ -8,35 +8,27 @@ const port = process.env.PORT || 3000;
 // setting up Handlebars
 app.engine(
   "handlebars",
-  expressHandlebars({
-    defaultlayout: "main",
+  expressHandlebars.engine({
+    defaultLayout: "main",
   })
 );
 app.set("view engine", "handlebars");
 
-app.get("/", (req, res) => {
-  res.type("text/plain");
-  res.send("Meadowlark Travel");
-});
+app.get("/", (req, res) => res.render("home"));
 
-app.get("/about", (req, res) => {
-  res.type("text/plain");
-  res.send("About Meadowlark Travel");
-});
+app.get("/about", (req, res) => res.render("about"));
 
 // user page 404
 app.use((req, res) => {
-  res.type("text/plain");
   res.status(404);
-  res.send("404 - Not found");
+  res.render("404");
 });
 
 // user page 500
 app.use((err, req, res, next) => {
   console.error(err.message);
-  res.type("text/plain");
   res.status(500);
-  res.send("500 - Server error");
+  res.render("500");
 });
 
 app.listen(port, () =>
