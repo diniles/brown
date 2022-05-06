@@ -5,6 +5,13 @@ const handlers = require('./lib/handlers');
 
 const app = express();
 
+app.get('/headers', (req, res) => {
+  res.type('text/plain');
+  const headers = Object.entries(req.headers)
+    .map(([key, value]) => `${key}: ${value}`);
+  res.send(headers.join('\n'));
+});
+
 // setting up Handlebars
 app.engine(
   'handlebars',
@@ -17,7 +24,7 @@ app.set('view engine', 'handlebars');
 const port = process.env.PORT || 3000;
 
 // add middleware path
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(`${__dirname}/public`));
 
 app.get('/', handlers.home);
 
