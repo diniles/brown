@@ -4,6 +4,9 @@ const expressHandlebars = require('express-handlebars');
 const handlers = require('./lib/handlers');
 
 const app = express();
+// Technical info - START
+// Disable Express header by default
+app.disable('x-powered-by');
 
 app.get('/headers', (req, res) => {
   res.type('text/plain');
@@ -11,6 +14,7 @@ app.get('/headers', (req, res) => {
     .map(([key, value]) => `${key}: ${value}`);
   res.send(headers.join('\n'));
 });
+// Technical info - END
 
 // setting up Handlebars
 app.engine(
